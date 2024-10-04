@@ -1,20 +1,19 @@
 import React from "react";
 import {Image} from "react-konva";
-import {WagonetType} from "./Wagonet.type";
-import train from './../../assets/train.png'
-
-const image = new window.Image();
-image.src = train;
+import {OptionType} from "./Option.type";
+import useImage from 'use-image';
 
 
-export const Wagonet = ({x, y, width, height, customRef}: WagonetType) => {
+export const Option = ({x, y, width, height, customRef, url}: OptionType) => {
+    const [image] = useImage(url)
+
 
 
     return (
         <Image
             image={image}
             ref={(node) => {
-                if (customRef) {
+                if(customRef){
                     customRef.current = node;
                 }
             }}
