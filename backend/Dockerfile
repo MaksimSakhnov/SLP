@@ -1,10 +1,11 @@
-# Используем официальный образ PostgreSQL
-FROM postgres:latest
+FROM node
 
-# Настраиваем переменные окружения
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PASSWORD=postgres
-ENV POSTGRES_DB=labaDatabase
+WORKDIR /backend
+COPY package.json .
+RUN yarn install
+COPY . .
+RUN yarn run pretypeorm
+RUN yarn typeorm:migration:generate -- my_init
+RUN yarn typeorm:migration:run
 
-# Экспонируем стандартный порт PostgreSQL
-EXPOSE 5432
+CMD yarn run start:prod
