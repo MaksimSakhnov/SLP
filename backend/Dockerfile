@@ -5,7 +5,6 @@ COPY package.json .
 RUN yarn install
 COPY . .
 RUN yarn run pretypeorm
-RUN yarn typeorm:migration:generate -- my_init
-RUN yarn typeorm:migration:run
+RUN git clone https://github.com/vishnubob/wait-for-it.git
 
 CMD yarn run start:prod

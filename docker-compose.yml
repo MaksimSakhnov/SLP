@@ -29,6 +29,24 @@ services:
       - DB_PASSWORD=$POSTGRES_PASSWORD
       - DB_NAME=$POSTGRES_DATABASE
       - DB_PORT=$POSTGRES_PORT
+  migration:
+    build:
+      context: .\backend
+    command:
+      [
+        "./wait-for-it/wait-for-it.sh",
+        "postgres_db:5432",
+        "--",
+        "yarn",
+        "typeorm:migration:run",
+      ]
+    links:
+      - postgres_db
+    depends_on:
+      - postgres_db
+    env_file: ./.env
+    environment:
+      - DB_HOST=postgres_db
 
 networks:
   postgres_network:
