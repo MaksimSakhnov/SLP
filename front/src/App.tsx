@@ -3,7 +3,7 @@ import {Stage, Layer, Image} from 'react-konva';
 import {Wagonet} from "./components/Wagonet/Wagonet";
 import {Option} from "./components/Option/Option";
 import backgroundImage from "./assets/background.png";
-
+import './App.css'
 
 
 const background = new window.Image();
@@ -21,18 +21,24 @@ export const App = () => {
     const [isMoving, setIsMoving] = useState(false)
     const [option1Image, setOption1Image] = useState(PIZZA_URL)
     const [option2Image, setOption2Image] = useState(BURGER_URL)
+    const [openResult, setOpenResult] = useState(false)
 
     useEffect(() => {
+        debugger
         if (direction === 'noChange') {
+            window.scrollTo({left: 0, top: 0, behavior: "smooth"})
             setIsMoving(true)
+
             if (wagonetRef.current) {
                 wagonetRef.current.to({
                     x: window.innerWidth - 200,
                     y: 50,
                     duration: 2,
                     onFinish: () => {
+
                         setOption1Image(WATER_URL)
-                        setTimeout(()=>{
+                        setOpenResult(true)
+                        setTimeout(() => {
                             setWagonetCoords({x: window.innerWidth - 200, y: 50})
                             setDirection(null)
                             setIsMoving(false)
@@ -40,13 +46,14 @@ export const App = () => {
                         }, 500)
 
                     },
-                    onUpdate: ()=> {
+                    onUpdate: () => {
                         console.log('upd')
                     }
                 })
             }
 
         } else if (direction === 'change') {
+            window.scrollTo({left: 0, top: 0, behavior: "smooth"})
             setIsMoving(true)
             if (wagonetRef.current) {
                 wagonetRef.current.to({
@@ -56,7 +63,10 @@ export const App = () => {
                     onFinish: () => {
 
                         setOption2Image(WATER_URL)
-                        setTimeout(()=>{
+                        setOpenResult(true)
+
+
+                        setTimeout(() => {
                             setWagonetCoords({x: window.innerWidth - 200, y: window.innerHeight - 200})
                             setDirection(null)
                             setIsMoving(false)
@@ -72,7 +82,13 @@ export const App = () => {
     }, [direction, wagonetY])
 
     return (
-        <>
+        <div className={"container"}>
+
+            {openResult && (<div className={'result'}>
+                <div className={'result_description'}>70% сделали такой же выбор, как и вы!</div>
+                <button className={'btn'} onClick={() => setOpenResult(false)}>Далее!</button>
+            </div>)}
+
             <Stage width={window.innerWidth} height={window.innerHeight}>
                 <Layer>
                     <Image
@@ -82,16 +98,19 @@ export const App = () => {
                         width={window.innerWidth}
                         height={window.innerHeight}
                     />
-                    <Option x={window.innerWidth - 400} y={50} width={200} height={100} url={option1Image}/>
-                    <Option x={window.innerWidth - 400} y={window.innerHeight - 200} width={200} height={100} url={option2Image}/>
-                    <Wagonet x={wagonetCoords.x} y={wagonetCoords.y} height={200} width={300} customRef={wagonetRef} />
+                    <Option x={window.innerWidth - 400} y={50} width={200} height={100}
+                            url={'./../../assets/five-guys.svg'}/>
+                    <Option x={window.innerWidth - 400} y={window.innerHeight - 200} width={200} height={100}
+                            url={'./assets/one-guy.svg'}/>
+                    <Wagonet x={wagonetCoords.x} y={wagonetCoords.y} height={200} width={300} customRef={wagonetRef}/>
                 </Layer>
             </Stage>
             <div style={{width: '100%', display: 'flex', gap: '5vw', justifyContent: 'center', alignItems: 'center'}}>
-                <button disabled={isMoving} onClick={() => setDirection('change')} >Ехать вниз</button>
-                <button disabled={isMoving} onClick={() => setDirection('noChange')}>Ехать вверх</button>
+                <button disabled={isMoving} className={'btn'} onClick={() => setDirection('change')}>Ехать вниз</button>
+                <button disabled={isMoving} className={'btn'} onClick={() => setDirection('noChange')}>Ехать вверх
+                </button>
             </div>
-        </>
+        </div>
 
     );
 };

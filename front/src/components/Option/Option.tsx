@@ -10,6 +10,7 @@ export const Option = ({x, y, width, height, customRef, url}: OptionType) => {
 
 
     return (
+
         <Image
             image={image}
             ref={(node) => {
