@@ -1,9 +1,9 @@
-import {MutableRefObject, RefObject} from "react";
+import type { MutableRefObject } from 'react';
 
-export type RectangleType = {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    customRef?:  MutableRefObject<any>
+export interface RectangleProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  customRef?: MutableRefObject<any>;
 }

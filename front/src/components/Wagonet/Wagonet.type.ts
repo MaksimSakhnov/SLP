@@ -1,9 +1,9 @@
-import {MutableRefObject} from "react";
+import type { MutableRefObject } from 'react';
 
-export type WagonetType = {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    customRef?: MutableRefObject<any>,
+export interface WagonetProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  customRef?: MutableRefObject<any>;
 }

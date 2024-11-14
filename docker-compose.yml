@@ -11,8 +11,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - postgres_network
 
   backend:
     depends_on:
@@ -20,18 +18,21 @@ services:
         condition: service_started
     build: ./backend
     restart: unless-stopped
-    env_file: ./.env
+    env_file: .env
     ports:
-      - $PORT:$PORT
+      - ${PORT}:${PORT}
     environment:
       - DB_HOST=postgres_db
       - DB_USER=$POSTGRES_USER
       - DB_PASSWORD=$POSTGRES_PASSWORD
       - DB_NAME=$POSTGRES_DATABASE
       - DB_PORT=$POSTGRES_PORT
+    volumes:
+      - /home/starichockmoh/programs/SLP/backend/uploads:/backend/uploads
+
   migration:
     build:
-      context: .\backend
+      context: ./backend
     command:
       [
         "./wait-for-it/wait-for-it.sh",
@@ -44,13 +45,10 @@ services:
       - postgres_db
     depends_on:
       - postgres_db
-    env_file: ./.env
+    env_file: .env
     environment:
       - DB_HOST=postgres_db
 
-networks:
-  postgres_network:
-    driver: bridge
 
 volumes:
   postgres_data:

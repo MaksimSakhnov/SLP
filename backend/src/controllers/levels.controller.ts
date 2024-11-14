@@ -20,9 +20,9 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiTags,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { LevelsUpdateDto } from '../dto/levels.dto';
 

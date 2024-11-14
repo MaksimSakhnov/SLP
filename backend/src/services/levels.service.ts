@@ -23,11 +23,12 @@ export class LevelsService {
       return await this.levelsEntityRepository
         .find({
           where: [{ last_name: search }],
+          order: { id: 'ASC' },
         })
         .then((items) => items.map((e) => LevelsDto.fromEntity(e)));
     }
     return await this.levelsEntityRepository
-      .find()
+      .find({ order: { id: 'ASC' } })
       .then((items) => items.map((e) => LevelsDto.fromEntity(e)));
   }
 

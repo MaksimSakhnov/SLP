@@ -1,27 +1,29 @@
-import React from "react";
-import {Image} from "react-konva";
-import {WagonetType} from "./Wagonet.type";
-import train from './../../assets/train.png'
+import { Image } from 'react-konva';
+import train from '@/assets/train.png';
+import { WagonetProps } from './Wagonet.type';
 
 const image = new window.Image();
 image.src = train;
 
-
-export const Wagonet = ({x, y, width, height, customRef}: WagonetType) => {
-
-
-    return (
-        <Image
-            image={image}
-            ref={(node) => {
-                if (customRef) {
-                    customRef.current = node;
-                }
-            }}
-            x={x}
-            y={y}
-            width={width}
-            height={height}
-        />
-    );
-};
+export default function Wagonet({
+  x,
+  y,
+  width,
+  height,
+  customRef,
+}: WagonetProps) {
+  return (
+    <Image
+      image={image}
+      ref={(node) => {
+        if (customRef) {
+          customRef.current = node;
+        }
+      }}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+    />
+  );
+}
