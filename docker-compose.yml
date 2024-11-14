@@ -48,6 +48,18 @@ services:
     env_file: .env
     environment:
       - DB_HOST=postgres_db
+  
+  frontend:
+    build:
+      context: ./front
+    ports:
+      - "9000:80"
+    environment:
+      - REACT_APP_BASE_URL=http://localhost:${PORT}
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
 
 
 volumes:
